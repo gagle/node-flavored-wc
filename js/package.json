@@ -1,0 +1,19 @@
+{
+	"name": "flavored-wc",
+	"version": "0.0.1",
+	"description": "wc command ported to Node.js with additional features",
+	"keywords": ["wc", "lines", "words", "count"],
+	"author": {
+		"name": "Gabriel Llamas",
+		"email": "gagle@outlook.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/Gagle/node-flavored-wc.git"
+	},
+	"engines": {
+		"node": ">=0.10"
+	},
+	"license": "MIT",
+	"main": "lib"
+}
