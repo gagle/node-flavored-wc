@@ -19,9 +19,9 @@ npm install flavored-wc
 npm install flavored-wc-native
 ```
 
-A native version is also available. I made it just for fun but if you can, install it. The speed improvement depends on some factors: file size, files quantity, file content and the information to retrieve. Also you must know that the JavaScript ⇄ C++ brige is pretty slow.
+A native version is also available. I made it just for fun but if you can, install it. The speed improvement depends on some factors: file size, files quantity, file content and the information to retrieve. You must also know that the JavaScript ⇄ C++ brige is pretty slow.
 
-In general it's ok to say that the native implementation is faster than the javascript one. I've tested both implementations with a 10MB file and the native is twice as fast. THis repository has been also tested with the following code and the native is four times faster.
+In general it's ok to say that the native implementation is faster than the javascript one. I've tested both implementations with a 10MB file and the native is twice as fast. The directory of this repository has been also tested with the following code and the native is four times faster.
 
 ```javascript
 //wc.js
@@ -41,7 +41,7 @@ $ time node wc.js
 
 <a name="wc"></a>
 __wc(path[, settings], callback) : undefined__  
-The `path` can be an String or an Array of Strings. These Strings can contain a valid path or raw data.
+The `path` can be an String or an Array of Strings. These Strings can contain a valid path or text data.
 
 The `settings` is an object that accepts the following settings. If the object is not provided all the information (bytes, chars, words and lines) will be counted.
 
