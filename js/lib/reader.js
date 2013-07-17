@@ -22,7 +22,7 @@ Reader.prototype.chunk = function (str){
 		this._meta = {
 			lineLength: 0
 		};
-		this._counters.lines++;
+		if (this._settings.lines) this._counters.lines++;
 	}
 	
 	if (this._settings.bytes) this._counters.bytes += Buffer.byteLength (str);

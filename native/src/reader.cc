@@ -68,7 +68,7 @@ Handle<Value> Reader::Chunk (const Arguments& args){
 	
 	if (!r->meta){
 		r->meta = new meta_t ();
-		r->counters->lines++;
+		if (r->settings->lines) r->counters->lines++;
 	}
 	
 	Local<String> str = Local<String>::Cast (args[0]);
