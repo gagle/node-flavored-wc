@@ -19,7 +19,7 @@ npm install flavored-wc
 npm install flavored-wc-native
 ```
 
-A native version is also available. I made it just for fun but if you can, install it. The speed improvement depends on some factors: file size, files quantity, file content and the information to retrieve. You must also know that the JavaScript ⇄ C++ brige is pretty slow.
+A native version is also available. I made it just for fun but, if you can, install it. The speed improvement depends on some factors: file size, files quantity, file content and the information to retrieve. You must also know that the JavaScript ⇄ C++ brige is pretty slow.
 
 In general it's ok to say that the native implementation is faster than the javascript one. I've tested both implementations with a 10MB file and the native is twice as fast. The directory of this repository has been also tested with the following code and the native is four times faster.
 
