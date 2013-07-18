@@ -25,7 +25,6 @@ Reader.prototype.chunk = function (str){
 		if (this._settings.lines) this._counters.lines++;
 	}
 	
-	if (this._settings.bytes) this._counters.bytes += Buffer.byteLength (str);
 	if (this._settings.chars) this._counters.chars += str.length;
 	
 	if (this._settings.words || this._settings.lines){

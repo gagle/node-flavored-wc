@@ -73,7 +73,6 @@ Handle<Value> Reader::Chunk (const Arguments& args){
 	
 	Local<String> str = Local<String>::Cast (args[0]);
 	
-	if (r->settings->bytes) r->counters->bytes += str->Utf8Length ();
 	if (r->settings->chars) r->counters->chars += str->Length ();
 	
 	if (r->settings->words || r->settings->lines){

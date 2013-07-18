@@ -1,6 +1,6 @@
 {
 	"name": "flavored-wc-native",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "wc command ported to Node.js with additional features",
 	"keywords": ["wc", "lines", "words", "count"],
 	"author": {

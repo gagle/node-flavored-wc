@@ -5,7 +5,7 @@ _Node.js project_
 
 #### wc command ported to Node.js with additional features ####
 
-Version: 0.0.1
+Version: 0.0.2
 
 The Unix wc command counts the number of bytes, characters, words and lines in a file but it lacks some useful features like walking a directory recursively and ignore paths. Also it has some issues with UTF8 encoded files.
 
