@@ -56,7 +56,7 @@ The `settings` is an object that accepts the following settings. If the object i
 - data - _Boolean_  
 	If `path` contains text data, set this option to true. Default is false.
 - ignore - _String_ | _Array_ | _Function_  
-	Paths to ignore. It can also be a function. The function is executed for each file and directory. It receives the path, the directory name, the name of the entry and a callback. The callback expects two parameters, a possible error and a boolean. If the boolean is true the path will be read, otherwise it will be ignored. The function acts like a filter, if you return false the path won't pass the filter.
+	Paths to ignore. It can also be a function. The function is executed for each file and directory. It receives the absolute path, the directory name, the name of the entry and a callback. The callback expects two parameters, a possible error and a boolean. If the boolean is true the path will be read, otherwise it will be ignored. The function acts like a filter, if you return false the path won't pass the filter.
 
 	```javascript
 	var wc = require ("flavored-wc");
