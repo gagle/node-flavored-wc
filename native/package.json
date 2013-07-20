@@ -9,11 +9,11 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/Gagle/node-flavored-wc.git"
+		"url": "git://github.com/gagle/node-flavored-wc.git"
 	},
 	"engines": {
 		"node": ">=0.10"
 	},
 	"license": "MIT",
-	"main": "build/Release/addon"
+	"main": "lib"
 }
