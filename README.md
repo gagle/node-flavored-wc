@@ -35,15 +35,18 @@ $ time node wc.js
 
 #### Functions ####
 
-- [wc(path[, settings], callback) : undefined](#wc)
+- [wc(path[, options], callback) : undefined](#wc)
 
 ---
 
 <a name="wc"></a>
-__wc(path[, settings], callback) : undefined__  
+__wc(path[, options], callback) : undefined__
+
 The `path` can be an String or an Array of Strings. These Strings can contain a valid path or text data.
 
-The `settings` is an object that accepts the following settings. If the object is not provided all the information (bytes, chars, words and lines) will be counted.
+If the `options` object is not provided all the information (bytes, chars, words and lines) will be counted.
+
+Options:
 
 - bytes - _Boolean_  
 	Set to true to count the number of bytes. Default is false.
@@ -61,7 +64,7 @@ The `settings` is an object that accepts the following settings. If the object i
 	```javascript
 	var wc = require ("flavored-wc");
 	
-	var settings = {
+	var options = {
 		ignore: function (p, dirname, basename, cb){
 			cb (null, basename !== "ignored_path");
 		},
@@ -69,7 +72,7 @@ The `settings` is an object that accepts the following settings. If the object i
 		...
 	};
 	
-	wc (".", settings, function (error, counters){
+	wc (".", options, function (error, counters){
 		...
 	});
 	```
