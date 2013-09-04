@@ -20,7 +20,7 @@ typedef struct{
 	bool chars;
 	bool words;
 	bool lines;
-} settings_t;
+} options_t;
 
 typedef struct{
 	bool word;
@@ -28,14 +28,14 @@ typedef struct{
 } meta_t;class Reader : public node::ObjectWrap{	public:		static void Init (Handle<Object> module);
 	
 	private:
-		Reader (settings_t* settings, Persistent<Object> countersObject);
+		Reader (options_t* options, Persistent<Object> countersObject);
 		~Reader ();
 		
 		static Handle<Value> New (const Arguments& args);
 		static Handle<Value> Chunk (const Arguments& args);
 		static Handle<Value> End (const Arguments& args);
 				static unsigned char masks[5];
-		settings_t* settings;
+		options_t* options;
 		counters_t* counters;
 		meta_t* meta;
 		Persistent<Object> countersObject;

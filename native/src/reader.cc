@@ -20,8 +20,8 @@ using v8::Value;
 //Code points: https://en.wikipedia.org/wiki/UTF-8
 unsigned char Reader::masks[5] = { 192, 224, 240, 248, 252 };
 
-Reader::Reader (settings_t* settings, Persistent<Object> countersObject){
-	this->settings = settings;
+Reader::Reader (options_t* options, Persistent<Object> countersObject){
+	this->options = options;
 	counters = new counters_t ();
 	this->countersObject = countersObject;
 	meta = 0;
@@ -41,20 +41,20 @@ void Reader::Init (Handle<Object> module){
 }
 
 Handle<Value> Reader::New (const Arguments& args){
-	settings_t* settings = new settings_t;
+	options_t* options = new options_t;
 	
-	Local<Object> settingsObject = Local<Object>::Cast (args[0]);
+	Local<Object> optionsObject = Local<Object>::Cast (args[0]);
 	
-	settings->bytes =
-			settingsObject->Get (String::NewSymbol ("bytes"))->BooleanValue ();
-	settings->chars =
-			settingsObject->Get (String::NewSymbol ("chars"))->BooleanValue ();
-	settings->words =
-			settingsObject->Get (String::NewSymbol ("words"))->BooleanValue ();
-	settings->lines =
-			settingsObject->Get (String::NewSymbol ("lines"))->BooleanValue ();
+	options->bytes =
+			optionsObject->Get (String::NewSymbol ("bytes"))->BooleanValue ();
+	options->chars =
+			optionsObject->Get (String::NewSymbol ("chars"))->BooleanValue ();
+	options->words =
+			optionsObject->Get (String::NewSymbol ("words"))->BooleanValue ();
+	options->lines =
+			optionsObject->Get (String::NewSymbol ("lines"))->BooleanValue ();
 
-	Reader* r = new Reader (settings,
+	Reader* r = new Reader (options,
 			Persistent<Object>::New (Local<Object>::Cast (args[1])));
 	r->Wrap (args.This());
 	
@@ -68,14 +68,14 @@ Handle<Value> Reader::Chunk (const Arguments& args){
 	
 	if (!r->meta){
 		r->meta = new meta_t ();
-		if (r->settings->lines) r->counters->lines++;
+		if (r->options->lines) r->counters->lines++;
 	}
 	
 	Local<String> str = Local<String>::Cast (args[0]);
 	
-	if (r->settings->chars) r->counters->chars += str->Length ();
+	if (r->options->chars) r->counters->chars += str->Length ();
 	
-	if (r->settings->words || r->settings->lines){
+	if (r->options->words || r->options->lines){
 		String::Utf8Value s (str->ToString ());
 		bool lineBreak = false;
 		unsigned char c;
@@ -105,7 +105,7 @@ Handle<Value> Reader::Chunk (const Arguments& args){
 				continue;
 			}
 			
-			if (r->settings->lines && c == '\n'){
+			if (r->options->lines && c == '\n'){
 				r->counters->lines++;
 				if (!lineBreak && r->meta->lineLength > r->counters->maxLineLength){
 					r->counters->maxLineLength = r->meta->lineLength;
@@ -113,13 +113,13 @@ Handle<Value> Reader::Chunk (const Arguments& args){
 				r->meta->lineLength = 0;
 				lineBreak = false;
 				r->word ();
-			}else if (r->settings->lines && (c == '\r' || c == '\f' || c == 'v')){
+			}else if (r->options->lines && (c == '\r' || c == '\f' || c == 'v')){
 				r->word ();
 				lineBreak = true;
 				if (r->meta->lineLength > r->counters->maxLineLength){
 					r->counters->maxLineLength = r->meta->lineLength;
 				}
-			}else if (r->settings->words && (c == '\t' || c == ' ')){
+			}else if (r->options->words && (c == '\t' || c == ' ')){
 				r->meta->lineLength++;
 				r->word ();
 			}else if (isprint (c)){
@@ -139,7 +139,7 @@ Handle<Value> Reader::End (const Arguments& args){
 	Reader* r = ObjectWrap::Unwrap<Reader>(args.This ());
 	
 	if (r->meta){
-		if (r->settings->lines && r->meta->lineLength > r->counters->maxLineLength){
+		if (r->options->lines && r->meta->lineLength > r->counters->maxLineLength){
 			r->counters->maxLineLength = r->meta->lineLength;
 		}
 		r->word ();
@@ -151,19 +151,19 @@ Handle<Value> Reader::End (const Arguments& args){
 	Local<String> linesSymbol = String::NewSymbol ("lines");
 	Local<String> maxLineLengthSymbol = String::NewSymbol ("maxLineLength");
 	
-	if (r->settings->bytes){
+	if (r->options->bytes){
 		r->counters->bytes += r->countersObject->Get (bytesSymbol)->NumberValue ();
 		r->countersObject->Set (bytesSymbol, Number::New (r->counters->bytes));
 	}
-	if (r->settings->chars){
+	if (r->options->chars){
 		r->counters->chars += r->countersObject->Get (charsSymbol)->NumberValue ();
 		r->countersObject->Set (charsSymbol, Number::New (r->counters->chars));
 	}
-	if (r->settings->words){
+	if (r->options->words){
 		r->counters->words += r->countersObject->Get (wordsSymbol)->NumberValue ();
 		r->countersObject->Set (wordsSymbol, Number::New (r->counters->words));
 	}
-	if (r->settings->lines){
+	if (r->options->lines){
 		r->counters->lines += r->countersObject->Get (linesSymbol)->NumberValue ();
 		r->countersObject->Set (linesSymbol, Number::New (r->counters->lines));
 		
@@ -174,7 +174,7 @@ Handle<Value> Reader::End (const Arguments& args){
 	}
 	
 	r->countersObject.Dispose ();
-	delete r->settings;
+	delete r->options;
 	delete r->counters;
 	delete r->meta;
 	
@@ -182,7 +182,7 @@ Handle<Value> Reader::End (const Arguments& args){
 }
 
 void Reader::word (){
-	if (settings->words && meta->word){
+	if (options->words && meta->word){
 		meta->word = false;
 		counters->words++;
 	}
