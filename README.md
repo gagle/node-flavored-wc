@@ -1,4 +1,4 @@
-wsc
+wc
 ==
 
 _Node.js project_
